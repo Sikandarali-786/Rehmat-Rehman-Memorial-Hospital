@@ -5,14 +5,18 @@ const tokenSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    phoneNumber: {
+        type: String,
+        required: true
+    },
     tokenNo: {
         type: Number,
-        required: true
+        required: true,
+        unique: true
     },
     mrid: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     estimatedTime: String,
     createdAt: {

@@ -11,6 +11,7 @@ import Button from '@/components/Button/Button';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import TokenSlipPDF from '@/components/PatientPDF/TokenSlipPDF';
 import TextInput from '@/components/Form/Input';
+import PhoneInput from "../Form/PhoneInput";
 
 
 const TokenModal = ({ onClose }) => {
@@ -74,6 +75,7 @@ const TokenModal = ({ onClose }) => {
                                 name="patientName"
                                 onChange={handleInput}
                             />
+                            <PhoneInput control={form.control} name="phoneNumber" />
                             <div className="flex gap-2">
                                 {!showDownload && (
                                     <Button

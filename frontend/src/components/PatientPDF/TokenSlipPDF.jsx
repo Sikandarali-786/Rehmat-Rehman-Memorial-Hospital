@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 8,
     marginBottom: 5,
-    border : "2px solid #ccc",
-    padding : 3,
+    border: "2px solid #ccc",
+    padding: 3,
   },
   row: {
     marginBottom: 4,
@@ -80,18 +80,25 @@ const TokenSlipPDF = ({ data }) => {
 
         <View style={styles.row}>
           <Text>
-            <Text style={styles.label}>Patient Name : </Text>
-            {data.patientName}
-          </Text>
-        </View>
-
-        <View style={styles.row}>
-          <Text>
             <Text style={styles.label}>MRID : </Text>
             {data.mrid}
           </Text>
         </View>
 
+        <View style={styles.row}>
+          <Text>
+            <Text style={styles.label}>Patient Name : </Text>
+            {data.patientName}
+          </Text>
+        </View>
+
+
+        <View style={styles.row}>
+          <Text>
+            <Text style={styles.label}>Phone Number : </Text>
+            {data.phoneNumber}
+          </Text>
+        </View>
 
 
         <View style={styles.row}>

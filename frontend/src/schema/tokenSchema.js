@@ -6,8 +6,10 @@ export const tokenSchema = z.object({
         .string()
         .min(1, getErrorMessage())
         .regex(/^[A-Za-z\s]+$/, 'Only alphabets are allowed'),
+    phoneNumber: z.string()
 });
 
 export const defaultValues = {
     patientName: '',
+    phoneNumber: ''
 };

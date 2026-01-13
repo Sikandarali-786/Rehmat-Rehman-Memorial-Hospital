@@ -1,49 +1,30 @@
-const Token = require("../model/tokenModel");
+const tokenService = require("../services/tokenServices");
 
 exports.generateToken = async (req, res) => {
   try {
-    const { patientName } = req.body;
-
-    if (!patientName) {
-      return res.status(400).json({ message: "Patient Name is required" });
-    }
-
-    const year = new Date().getFullYear();
-    const lastToken = await Token.findOne({
-      mrid: new RegExp(`-${year}$`)
-    }).sort({ createdAt: -1 });
-
-    let mridNumber = lastToken ? parseInt(lastToken.mrid.split("-")[0]) : 0;
-    mridNumber += 1;
-    const newMRID = `${String(mridNumber).padStart(2, "0")}-${year}`;
-
-    const lastOverallToken = await Token.findOne().sort({ tokenNo: -1 });
-    const newTokenNo = lastOverallToken ? lastOverallToken.tokenNo + 1 : 1;
-
-    const newToken = new Token({
-      patientName,
-      tokenNo: newTokenNo,
-      mrid: newMRID,
-      estimatedTime: "20-30 Minutes"
-    });
-
-    await newToken.save();
-
-
-    res.status(201).json({
-      success: true,
-      data: {
-        tokenNo: newToken.tokenNo,
-        mrid: newToken.mrid,
-        patientName: newToken.patientName,
-        estimatedTime: newToken.estimatedTime,
-        createdAt: newToken.createdAt
-      }
-    });
+    const response = await tokenService.generateTokenService(req.body);
+    res.status(201).json(response);
 
   } catch (error) {
-    console.error("Token Error:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Token Controller Error:", error);
+
+    if (error.status) {
+      return res.status(error.status).json({ message: error.message });
+    }
+
+    if (error.code === 11000) {
+      const field = Object.keys(error.keyValue)[0];
+      return res.status(400).json({
+        message: "Duplicate entry",
+        field,
+        value: error.keyValue[field]
+      });
+    }
+
+    res.status(500).json({
+      message: "Internal server error",
+      error: error.message
+    });
   }
 };
 
