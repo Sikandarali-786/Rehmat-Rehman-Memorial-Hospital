@@ -1,8 +1,9 @@
 const express = require("express");
-const { generateToken,  getMRID } = require("../controller/tokenController");
+const { generateToken, getTokenByMRID, getTokensByDate } = require("../controller/tokenController");
 const router = express.Router();
 
 router.post('/token', generateToken);
-router.get('/latestmrid', getMRID);
+router.get('/token/:mrid', getTokenByMRID);
+router.get('/token-summary', getTokensByDate);
 
 module.exports = router;

@@ -19,13 +19,13 @@ const Login = () => {
         resolver: zodResolver(loginSchema),
         defaultValues,
     })
-    const onSubmit = (data) => {
-        const success = login(data.username, data.password)
+    const onSubmit = async (data) => {
+        const success = await login(data.username, data.password)
         if (success) {
-            toast.success('Login successful!')
+            toast.success('Login successfully!')
             navigate('/')
         } else {
-            toast.error('Invalid username or password')
+            toast.error('Invalid username or password!')
         }
     }
 

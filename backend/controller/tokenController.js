@@ -29,24 +29,26 @@ exports.generateToken = async (req, res) => {
 };
 
 
-exports.getMRID = async (req, res) => {
+exports.getTokenByMRID = async (req, res) => {
   try {
-    const getMrid = await Token.findOne().sort({ createdAt: -1 }).select('mrid');
-    if (!getMrid) {
-      return res.status(404).json({
-        success: false,
-        message: "No MRID found",
-      });
-    }
-    res.status(200).json({
-      success: true,
-      data: getMrid,
-    });
+    const { mrid } = req.params;
+    const response = await tokenService.getTokenByMRIDService(mrid);
+    res.status(200).json(response);
   } catch (error) {
-    res.status(500).json({
+    res.status(error.status || 500).json({
       success: false,
-      message: "Server error",
-      error: error.message,
+      message: error.message
+    });
+  }
+};
+
+exports.getTokensByDate = async (req, res) => {
+  try {
+    const response = await tokenService.getTokensByDateService(req.query);
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(error.status || 500).json({
+      message: error.message
     });
   }
 };

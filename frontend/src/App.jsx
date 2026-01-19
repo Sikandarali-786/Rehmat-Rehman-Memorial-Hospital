@@ -14,6 +14,7 @@ const BookingAppointment = lazy(() => import('./pages/BookingAppointment/Booking
 const PatientHistory = lazy(() => import('./pages/PatientRegistration/Components/PatientHistory'));
 const Login = lazy(() => import('./pages/Auth/Login'));
 const Register = lazy(() => import('./pages/Auth/Register'))
+const TokenSummary = lazy(() => import('./pages/Token/TokenSummary'));
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
         <Route path="patients/:id" element={<PatientHistory />} />
         <Route path="bookingappointment" element={<BookingAppointment />} />
         <Route path="appointmentlist" element={<AppointmentList />} />
+        <Route path="tokensummary" element={<TokenSummary />} />
       </Route>
     </Routes>
   );

@@ -3,7 +3,7 @@ import { Controller } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-const PhoneInput = ({ control, name, label = 'Phone Number', placeholder = 'Enter Phone Number', className = '' }) => {
+const PhoneInput = ({ control, name, label = 'Phone Number', placeholder = 'Enter Phone Number', className = '', disabled = false }) => {
   return (
     <div className={`space-y-1 ${className}`}>
       {label && <Label htmlFor={name}>{label}</Label>}
@@ -19,14 +19,11 @@ const PhoneInput = ({ control, name, label = 'Phone Number', placeholder = 'Ente
             const { value, onChange, ...rest } = field;
 
             const handleChange = (e) => {
-              // Get only digits, max 10
-              const digits = e.target.value.replace(/\D/g, '').slice(0, 10)              
-              // Convert to 03 format for form value
+              const digits = e.target.value.replace(/\D/g, '').slice(0, 10)      
               const formValue = digits ? '0' + digits : '';              
               onChange(formValue);
             };
 
-            // Convert stored value (03123456789) to display (3123456789)
             const displayValue = value && value.startsWith('03') ? value.slice(1) : '';
 
             return (
@@ -40,6 +37,7 @@ const PhoneInput = ({ control, name, label = 'Phone Number', placeholder = 'Ente
                   inputMode="numeric"
                   type="tel"
                   className={`pl-12 ${fieldState.error ? 'border-red-500 focus-visible:ring-red-500' : ''}`}
+                  disabled={disabled}
                 />
                 {fieldState.error && (
                   <p className="text-sm text-red-500">{fieldState.error.message}</p>

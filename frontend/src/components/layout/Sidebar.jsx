@@ -6,6 +6,7 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 import { ChevronLeft, ChevronRight, House, Menu } from "lucide-react";
+import { GiToken } from "react-icons/gi";
 import {
   Sheet,
   SheetContent,
@@ -22,6 +23,7 @@ const menu = [
   { label: "Patient List", icon: <FaUsers />, path: "/patientdata" },
   { label: "Booking Appointment", icon: <FaCalendarAlt />, path: "/bookingappointment" },
   { label: "Appointment List", icon: <FaUsers />, path: "/appointmentlist" },
+  { label: "Token Summary", icon: <GiToken />, path: "/tokensummary" },
 ];
 
 const Sidebar = () => {

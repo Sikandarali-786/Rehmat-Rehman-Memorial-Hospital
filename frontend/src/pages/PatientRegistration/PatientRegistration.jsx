@@ -11,7 +11,7 @@ import { toast } from 'sonner';
 import { useEffect, useState } from 'react';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import PatientPDF from '../../components/PatientPDF/PatientPDF';
-import { getMRID } from '@/api/TokenApi';
+import { getTokenByMRID } from '@/api/TokenApi';
 
 const PatientRegistration = () => {
   const [submittedData, setSubmittedData] = useState(null);
@@ -21,17 +21,7 @@ const PatientRegistration = () => {
     defaultValues
   });
 
-  // const { data: latestToken, refetch } = useQuery({
-  //   queryKey: ['latest-token'],
-  //   queryFn: getMRID,
-  // });
-
-
-  // useEffect(() => {
-  //   if (latestToken?.mrid) {
-  //     form.setValue("mrid", latestToken.mrid);
-  //   }
-  // }, [latestToken, form]);
+  const mrid = form.watch("mrid");
 
   const { mutate, isPending } = useMutation({
     mutationFn: addPatient,
@@ -46,6 +36,21 @@ const PatientRegistration = () => {
       toast.error(`Error: ${error.message || 'Failed to register patient.'}`);
     },
   });
+
+  const { data: tokenData, refetch } = useQuery({
+    queryKey: ["token", mrid],
+    queryFn: () => getTokenByMRID(mrid),
+    enabled: false,
+  });
+
+  useEffect(() => {
+    if (tokenData?.patientName) {
+      const nameParts = tokenData.patientName.split(" ");
+      form.setValue("firstName", nameParts[0] || "");
+      form.setValue("lastName", nameParts.slice(1).join(" ") || "");
+      form.setValue("phone", tokenData.phoneNumber || "");
+    }
+  }, [tokenData, form]);
 
   const onSubmit = (data) => {
     const payload = {
@@ -72,7 +77,7 @@ const PatientRegistration = () => {
         <Heading title="+ New Patient Form" className='pb-4' />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <PatientRegisterForm />
+            <PatientRegisterForm tokenData={tokenData} refetch={refetch} />
             <div className='flex justify-center md:justify-end items-center gap-x-2'>
               <Button
                 label={isPending ? 'Submitting...' : 'Submit'}

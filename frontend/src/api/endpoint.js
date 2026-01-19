@@ -4,7 +4,8 @@ const apiURL = config.apiUrl;
 
 // Token Generate API endpoint
 export const Token = `${apiURL}/token`
-export const LatestMRID = `${apiURL}/latestmrid`
+export const TokenByMRID = `${apiURL}/token`
+export const TokenSummary = `${apiURL}/token-summary`
 
 // Login APi endpoint 
 export const Login = `${apiURL}/login`

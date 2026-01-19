@@ -19,6 +19,7 @@ const TextInput = ({
   rules = {},
   control,
   required,
+  disabled = false,
   ...props
 }) => {
   return (
@@ -36,6 +37,7 @@ const TextInput = ({
               placeholder={placeholder}
               type={type}
               className={`${className}`}
+              disabled={disabled}
               {...props}
             />
           </FormControl>

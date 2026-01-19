@@ -7,9 +7,9 @@ import { bookingAppointmentSchema, defaultValues } from '@/schema/bookingAppoint
 import Heading from '@/components/Heading/Heading';
 import { Form } from '@/components/ui/form';
 import BookingAppointmentForm from './Components/BookingAppointmentForm';
-import AppointmentList from '../AppointmentList/AppointmentList';
 import { toast } from 'sonner';
 import { useState } from 'react';
+import { FiCalendar } from 'react-icons/fi';
 
 
 const BookingAppointment = () => {
@@ -53,7 +53,7 @@ const BookingAppointment = () => {
   return (
     <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="bg-white p-6 rounded-2xl shadow">
-        <Heading title="Book Appointment" className='pb-4' />
+        <Heading title={<><FiCalendar size={28} />Book Appointment</>} className='pb-4 flex items-center gap-2' />
         <Form {...form}>
           <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
             <BookingAppointmentForm setPatientInfo={setPatientInfo} patientInfo={patientInfo} />

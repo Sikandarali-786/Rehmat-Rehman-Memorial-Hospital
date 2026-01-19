@@ -92,7 +92,6 @@ const TokenSlipPDF = ({ data }) => {
           </Text>
         </View>
 
-
         <View style={styles.row}>
           <Text>
             <Text style={styles.label}>Phone Number : </Text>
